@@ -1,14 +1,13 @@
 class Player {
   static get VERSION() {
-    return '0.1';
+    return "0.2";
   }
 
   static betRequest(gameState, bet) {
-    bet(0);
+    bet(1);
   }
 
-  static showdown(gameState) {
-  }
+  static showdown(gameState) {}
 }
 
 module.exports = Player;
