@@ -1,6 +1,6 @@
 class Player {
   static get VERSION() {
-    return "0.5";
+    return "Skynet";
   }
 
   static highCard(hole_cards) {
@@ -16,6 +16,14 @@ class Player {
       player => player.id != activePlayerId && player.stack > ourBudget / 4
     );
     return notPoorPlayers.length == 0;
+  }
+
+  static someoneRaised(players, activePlayerId) {
+    let raised = players.filter(
+      player => player.id != activePlayerId && player.bet != 0
+    );
+
+    return raised.length > 0;
   }
 
   static betRequest(gameState, bet) {
@@ -49,6 +57,12 @@ class Player {
           // 2 high cards
           // go all in
           bet(10000);
+        } else if (
+          Player.highCard(gameState.players[gameState.in_action].hole_cards) ==
+            0 &&
+          Player.someoneRaised(gameState.players, gameState.in_action)
+        ) {
+          bet(0);
         } else {
           // raise
 
