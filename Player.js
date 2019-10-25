@@ -1,13 +1,13 @@
 class Player {
   static get VERSION() {
-    return "0.4";
+    return "0.5";
   }
 
   static highCard(hole_cards) {
     let high = hole_cards.filter(card =>
       ["J", "Q", "K", "A"].includes(card.rank)
     );
-    return high.length > 0;
+    return high.length;
   }
 
   static betRequest(gameState, bet) {
@@ -17,7 +17,8 @@ class Player {
         if (
           gameState.players[gameState.in_action].hole_cards[0].suit ===
             gameState.players[gameState.in_action].hole_cards[1].suit &&
-          Player.highCard(gameState.players[gameState.in_action].hole_cards)
+          Player.highCard(gameState.players[gameState.in_action].hole_cards) >=
+            1
         ) {
           // same suit & high card (J, Q, K, A)
           // go all in
@@ -29,12 +30,27 @@ class Player {
           // same 2 cards
           // go all in
           bet(10000);
+        } else if (
+          Player.highCard(gameState.players[gameState.in_action].hole_cards) ==
+          2
+        ) {
+          // 2 high cards
+          // go all in
+          bet(10000);
         } else {
-          // just raise
+          // raise
+
+          // bet(
+          //   gameState.current_buy_in -
+          //     gameState.players[gameState.in_action].bet +
+          //     gameState.minimum_raise
+          // );
+
+          // call
+
           bet(
             gameState.current_buy_in -
-              gameState.players[gameState.in_action].bet +
-              gameState.minimum_raise
+              gameState.players[gameState.in_action].bet
           );
         }
       }
