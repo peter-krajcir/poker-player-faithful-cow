@@ -22,7 +22,15 @@ class Player {
           // same suit & high card (J, Q, K, A)
           // go all in
           bet(10000);
+        } else if (
+          gameState.players[gameState.in_action].hole_cards[0].rank ===
+          gameState.players[gameState.in_action].hole_cards[1].rank
+        ) {
+          // same 2 cards
+          // go all in
+          bet(10000);
         } else {
+          // just raise
           bet(
             gameState.current_buy_in -
               gameState.players[gameState.in_action].bet +
