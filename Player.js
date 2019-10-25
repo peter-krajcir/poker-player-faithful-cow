@@ -1,4 +1,20 @@
 class Player {
+  static check_cards(cards) {
+    return Promise.new((resolve, reject) => {
+      request(
+        "http://rainman.leanpoker.org/rank?cards=" + JSON.stringify(cards),
+        { json: true },
+        (err, res, body) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(body);
+          }
+        }
+      );
+    });
+  }
+
   static get VERSION() {
     return "Skynet";
   }
@@ -30,6 +46,17 @@ class Player {
     if (true) {
       // new logic
       if (gameState.players[gameState.in_action].hole_cards.length == 2) {
+        if (gameState.community_cards.length === 5) {
+          console.log("check cards start - ", new Date());
+          Player.check_cards(
+            gameState.players[gameState.in_action].hole_cards.concat(
+              gameState.community_cards
+            )
+          ).then(data => {
+            console.log("data", data);
+            console.log("check cards end - ", new Date());
+          });
+        }
         if (
           Player.activePlayerReallyRich(gameState.players, gameState.in_action)
         ) {
