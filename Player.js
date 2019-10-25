@@ -1,6 +1,6 @@
 class Player {
   static check_cards(cards) {
-    return Promise.new((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       request(
         "http://rainman.leanpoker.org/rank?cards=" + JSON.stringify(cards),
         { json: true },
@@ -16,7 +16,7 @@ class Player {
   }
 
   static get VERSION() {
-    return "Skynet";
+    return "Skynet 2.0";
   }
 
   static highCard(hole_cards) {
