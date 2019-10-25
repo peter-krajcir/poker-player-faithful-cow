@@ -10,11 +10,23 @@ class Player {
     return high.length;
   }
 
+  static activePlayerReallyRich(players, activePlayerId) {
+    const ourBudget = players[activePlayerId].stack;
+    let notPoorPlayers = players.filter(
+      player => player.id != activePlayerId && player.stack > ourBudget / 4
+    );
+    return notPoorPlayers.length == 0;
+  }
+
   static betRequest(gameState, bet) {
     if (true) {
       // new logic
       if (gameState.players[gameState.in_action].hole_cards.length == 2) {
         if (
+          Player.activePlayerReallyRich(gameState.players, gameState.in_action)
+        ) {
+          bet(10000);
+        } else if (
           gameState.players[gameState.in_action].hole_cards[0].suit ===
             gameState.players[gameState.in_action].hole_cards[1].suit &&
           Player.highCard(gameState.players[gameState.in_action].hole_cards) >=
