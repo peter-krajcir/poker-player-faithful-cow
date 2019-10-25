@@ -1,6 +1,6 @@
 class Player {
   static get VERSION() {
-    return "0.3";
+    return "0.4";
   }
 
   static highCard(hole_cards) {
@@ -17,7 +17,7 @@ class Player {
         if (
           gameState.players[gameState.in_action].hole_cards[0].suit ===
             gameState.players[gameState.in_action].hole_cards[1].suit &&
-          highCard(gameState.players[gameState.in_action].hole_cards)
+          Player.highCard(gameState.players[gameState.in_action].hole_cards)
         ) {
           // same suit & high card (J, Q, K, A)
           // go all in
